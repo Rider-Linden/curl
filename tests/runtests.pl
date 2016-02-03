@@ -2346,10 +2346,12 @@ sub checksystem {
            }
            elsif ($libcurl =~ /nss/i) {
                $has_nss=1;
+               $has_sslpinning=1;
                $ssllib="NSS";
            }
            elsif ($libcurl =~ /(yassl|wolfssl)/i) {
                $has_yassl=1;
+               $has_sslpinning=1;
                $ssllib="yassl";
            }
            elsif ($libcurl =~ /polarssl/i) {
@@ -5000,18 +5002,28 @@ if(!$listonly) {
 # Fetch all disabled tests, if there are any
 #
 
-if(open(D, "<$TESTDIR/DISABLED")) {
-    while(<D>) {
-        if(/^ *\#/) {
-            # allow comments
-            next;
+sub disabledtests {
+    my ($file) = @_;
+
+    if(open(D, "<$file")) {
+        while(<D>) {
+            if(/^ *\#/) {
+                # allow comments
+                next;
+            }
+            if($_ =~ /(\d+)/) {
+                $disabled{$1}=$1; # disable this test number
+            }
         }
-        if($_ =~ /(\d+)/) {
-            $disabled{$1}=$1; # disable this test number
-        }
+        close(D);
     }
-    close(D);
 }
+
+# globally disabled tests
+disabledtests("$TESTDIR/DISABLED");
+
+# locally disabled tests, ignored by git etc
+disabledtests("$TESTDIR/DISABLED.local");
 
 #######################################################################
 # If 'all' tests are requested, find out all test numbers

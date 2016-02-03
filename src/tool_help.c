@@ -65,6 +65,7 @@ static const char *const helptext[] = {
   "     --crlf          Convert LF to CRLF in upload",
   "     --crlfile FILE  Get a CRL list in PEM format from the given file",
   " -d, --data DATA     HTTP POST data (H)",
+  "     --data-raw DATA  HTTP POST data, '@' allowed (H)",
   "     --data-ascii DATA  HTTP POST ASCII data (H)",
   "     --data-binary DATA  HTTP POST binary data (H)",
   "     --data-urlencode DATA  HTTP POST data url encoded (H)",
@@ -156,7 +157,7 @@ static const char *const helptext[] = {
   "     --pass PASS     Pass phrase for the private key (SSL/SSH)",
   "     --path-as-is    Do not squash .. sequences in URL path",
   "     --pinnedpubkey FILE  Public key (PEM/DER) to verify peer against "
-  "(OpenSSL/GnuTLS/GSKit only)",
+  "(OpenSSL/GnuTLS/NSS/wolfSSL/CyaSSL/GSKit only)",
   "     --post301       "
   "Do not switch to GET after following a 301 redirect (H)",
   "     --post302       "
